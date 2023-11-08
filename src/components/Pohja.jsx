@@ -1,11 +1,31 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Box } from '@mui/material';
+import { AppBar, Box, Button, TextField, Typography, Input } from '@mui/material';
 
 function Pohja() {
 
     const [data, setData] = useState({});
-    const [questions, setQuestions] = useState([])
+    const [questions, setQuestions] = useState([]);
+    const [answers, setAnswers] = useState([]);
+
+    const handleChange = event => {
+        setAnswers({ ...answers, [event.target.name]: event.target.value })
+    }
+
+    const saveAnswers = answers => {
+        console.log(answers)
+        /*const options = {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(answers)
+        }
+        fetch('', options)
+            .then(response => fetchData())
+            .catch(error => console.error(error))
+            */
+    };
 
     const fetchData = () => {
         fetch('http://localhost:8080/queries/1')
@@ -24,17 +44,35 @@ function Pohja() {
     } else {
         return (
             <Box>
-                <p>Otsikko: {data.title}</p>
-                <p>Kuvaus: {data.description}</p>
+                <AppBar position='static'>
+                    <Typography variant='h5'>Kysely
+                    </Typography>
+                </AppBar>
+                <p>{data.title}</p>
+                <p>{data.description}</p>
 
-                {questions.map(question => {
+                {questions.map((question, index) => {
                     return (
-                        <p key={question.id}>
-                            Kysymys: {question.questionText}<br />
-                        </p>
+                        <div>
+                            <p key={question.id}>
+                                {index + 1}. {question.questionText}<br />
+                            </p>
+                            <TextField
+                                id="outlined-textarea"
+                                name="text"
+                                placeholder="Vastaus"
+                                multiline
+                                onChange={event => handleChange(event)}
+                            />
+                            <Input
+                                name="questionId"
+                                value={question.id}
+                            ></Input>
+                        </div>
                     );
                 })
                 }
+                <Button onClick={saveAnswers}>Save</Button>
             </Box>
         );
     }
