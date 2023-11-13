@@ -52,8 +52,7 @@ function Pohja() {
                     textAlign: "center",
                     padding: "10px 0 10px 0"
                 }}>
-                    <Typography variant='h4'>Kysely
-                    </Typography>
+                    <Typography variant='h5'>{data.title}</Typography>
                 </AppBar>
 
                 <Paper sx={{
@@ -65,8 +64,7 @@ function Pohja() {
                         color: 'rgb(100,100,100)',
                     },
                 }}>
-                    <Typography variant='h5'>{data.title}</Typography>
-                    <Typography sx={{ padding: '0 0 20px 0' }}>{data.description}</Typography>
+                    <Typography sx={{ padding: '0 0 20px 0', fontSize: '19px' }}>{data.description}</Typography>
                     {questions.map((question, index) => {
                         return (
                             <Box>
