@@ -1,11 +1,12 @@
 import { Box, Typography, AppBar, Toolbar } from '@mui/material';
 import Pohja from './components/Pohja';
+import './style.css';
 
 function App() {
   return (
-    <div>
+    <Box sx={{height: "100vh"}}>
       <Pohja />
-    </div>
+    </Box>
   );
 }
 

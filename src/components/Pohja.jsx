@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { AppBar, Box, Button, TextField, Typography, Input } from '@mui/material';
+import { AppBar, Box, Button, TextField, Typography, Paper } from '@mui/material';
 
 function Pohja() {
 
@@ -9,7 +9,7 @@ function Pohja() {
     const [answers, setAnswers] = useState([]);
 
     const handleChange = (event, id) => {
-        setAnswers( [...answers, {questionId: id, text: event.target.value }])
+        setAnswers([...answers, { questionId: id, text: event.target.value }])
     }
 
     const saveAnswers = () => {
@@ -24,7 +24,7 @@ function Pohja() {
         fetch('http://localhost:8080/queries/1/answers', options)
             .then(response => fetchData())
             .catch(error => console.error(error))
-            
+
     };
 
     const fetchData = () => {
@@ -43,33 +43,51 @@ function Pohja() {
         return <div>Loading...</div>
     } else {
         return (
-            <Box>
-                <AppBar position='static'>
-                    <Typography variant='h5'>Kysely
+            <Box sx={{
+                height: "100vh",
+                width: "100vw",
+            }}>
+                <AppBar position='static' sx={{
+                    width: "100%",
+                    textAlign: "center",
+                    padding: "10px 0 10px 0"
+                }}>
+                    <Typography variant='h4'>Kysely
                     </Typography>
                 </AppBar>
-                <p>{data.title}</p>
-                <p>{data.description}</p>
 
-                {questions.map((question, index) => {
-                    return (
-                        <div>
-                            <p key={question.id}>
-                                {index + 1}. {question.questionText}<br />
-                            </p>
-                            <TextField
-                                id="outlined-textarea"
-                                name="text"
-                                placeholder="Vastaus"
-                                multiline
-                                onChange={event => handleChange(event, question.id)}
-                            />
-                        </div>
-                    );
-                })
-                }
-                <Button onClick={saveAnswers}>Save</Button>
-            </Box>
+                <Paper sx={{
+                    width: "30%",
+                    padding: "30px",
+                    margin: "20px auto 0 auto",
+                    '& .MuiTypography-root': {
+                        textAlign: 'center',
+                    },
+                }}>
+                    <Typography variant='h5'>{data.title}</Typography>
+                    <Typography>{data.description}</Typography>
+                    {questions.map((question, index) => {
+                        return (
+                            <div>
+                                <p key={question.id}>
+                                    {index + 1}. {question.questionText}<br />
+                                </p>
+                                <TextField
+                                    id="outlined-textarea"
+                                    name="text"
+                                    placeholder="Vastaus"
+                                    multiline
+                                    fullWidth
+                                    onChange={event => handleChange(event, question.id)}
+                                />
+                            </div>
+                        );
+                    })
+                    }
+                    <Button onClick={saveAnswers}
+                        sx={{ margin: "30px 0 0 0" }}>Save</Button>
+                </Paper>
+            </Box >
         );
     }
 }
