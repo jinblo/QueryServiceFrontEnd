@@ -62,13 +62,14 @@ function Pohja() {
                     margin: "20px auto 0 auto",
                     '& .MuiTypography-root': {
                         textAlign: 'center',
+                        color: 'rgb(100,100,100)',
                     },
                 }}>
                     <Typography variant='h5'>{data.title}</Typography>
-                    <Typography>{data.description}</Typography>
+                    <Typography sx={{ padding: '0 0 20px 0' }}>{data.description}</Typography>
                     {questions.map((question, index) => {
                         return (
-                            <div>
+                            <Box>
                                 <p key={question.id}>
                                     {index + 1}. {question.questionText}<br />
                                 </p>
@@ -80,7 +81,7 @@ function Pohja() {
                                     fullWidth
                                     onChange={event => handleChange(event, question.id)}
                                 />
-                            </div>
+                            </Box>
                         );
                     })
                     }
