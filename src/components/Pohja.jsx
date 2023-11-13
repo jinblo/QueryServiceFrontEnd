@@ -8,23 +8,23 @@ function Pohja() {
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState([]);
 
-    const handleChange = event => {
-        setAnswers({ ...answers, [event.target.name]: event.target.value })
+    const handleChange = (event, id) => {
+        setAnswers( [...answers, {questionId: id, text: event.target.value }])
     }
 
-    const saveAnswers = answers => {
+    const saveAnswers = () => {
         console.log(answers)
-        /*const options = {
+        const options = {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(answers)
         }
-        fetch('', options)
+        fetch('http://localhost:8080/queries/1/answers', options)
             .then(response => fetchData())
             .catch(error => console.error(error))
-            */
+            
     };
 
     const fetchData = () => {
@@ -62,12 +62,8 @@ function Pohja() {
                                 name="text"
                                 placeholder="Vastaus"
                                 multiline
-                                onChange={event => handleChange(event)}
+                                onChange={event => handleChange(event, question.id)}
                             />
-                            <Input
-                                name="questionId"
-                                value={question.id}
-                            ></Input>
                         </div>
                     );
                 })
