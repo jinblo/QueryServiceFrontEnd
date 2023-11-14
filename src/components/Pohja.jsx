@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { AppBar, Box, Button, TextField, Typography, Input } from '@mui/material';
+import { AppBar, Box, Button, TextField, Typography, Paper } from '@mui/material';
 
 function Pohja() {
 
@@ -8,8 +8,13 @@ function Pohja() {
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState();
 
+<<<<<<< HEAD
     const handleChange = (event) => {
         setAnswers({...answers, [event.target.name]: event.target.value })
+=======
+    const handleChange = (event, id) => {
+        setAnswers([...answers, { questionId: id, text: event.target.value }])
+>>>>>>> c14db0550f2c8570f67484f2b647a70998753caf
     }
 
     const saveAnswers = () => {
@@ -27,7 +32,7 @@ function Pohja() {
         fetch('http://localhost:8080/queries/1/answers', options)
             .then(response => fetchData())
             .catch(error => console.error(error))
-            
+
     };
 
     const fetchData = () => {
@@ -46,11 +51,18 @@ function Pohja() {
         return <div>Loading...</div>
     } else {
         return (
-            <Box>
-                <AppBar position='static'>
-                    <Typography variant='h5'>Kysely
-                    </Typography>
+            <Box sx={{
+                height: "100vh",
+                width: "100vw",
+            }}>
+                <AppBar position='static' sx={{
+                    width: "100%",
+                    textAlign: "center",
+                    padding: "10px 0 10px 0"
+                }}>
+                    <Typography variant='h5'>{data.title}</Typography>
                 </AppBar>
+<<<<<<< HEAD
                 <p>{data.title}</p>
                 <p>{data.description}</p>
                 
@@ -71,6 +83,41 @@ function Pohja() {
                 }
                 <Button onClick={saveAnswers}>Save</Button>
             </Box>
+=======
+
+                <Paper sx={{
+                    width: "30%",
+                    padding: "30px",
+                    margin: "20px auto 0 auto",
+                    '& .MuiTypography-root': {
+                        textAlign: 'center',
+                        color: 'rgb(100,100,100)',
+                    },
+                }}>
+                    <Typography sx={{ padding: '0 0 20px 0', fontSize: '19px' }}>{data.description}</Typography>
+                    {questions.map((question, index) => {
+                        return (
+                            <Box>
+                                <p key={question.id}>
+                                    {index + 1}. {question.questionText}<br />
+                                </p>
+                                <TextField
+                                    id="outlined-textarea"
+                                    name="text"
+                                    placeholder="Vastaus"
+                                    multiline
+                                    fullWidth
+                                    onChange={event => handleChange(event, question.id)}
+                                />
+                            </Box>
+                        );
+                    })
+                    }
+                    <Button onClick={saveAnswers}
+                        sx={{ margin: "30px 0 0 0" }}>Save</Button>
+                </Paper>
+            </Box >
+>>>>>>> c14db0550f2c8570f67484f2b647a70998753caf
         );
     }
 }
