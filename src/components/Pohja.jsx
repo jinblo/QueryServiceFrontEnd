@@ -8,13 +8,8 @@ function Pohja() {
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState();
 
-<<<<<<< HEAD
     const handleChange = (event) => {
         setAnswers({...answers, [event.target.name]: event.target.value })
-=======
-    const handleChange = (event, id) => {
-        setAnswers([...answers, { questionId: id, text: event.target.value }])
->>>>>>> c14db0550f2c8570f67484f2b647a70998753caf
     }
 
     const saveAnswers = () => {
@@ -62,28 +57,6 @@ function Pohja() {
                 }}>
                     <Typography variant='h5'>{data.title}</Typography>
                 </AppBar>
-<<<<<<< HEAD
-                <p>{data.title}</p>
-                <p>{data.description}</p>
-                
-                {questions.map((question, index) => {
-                    return (
-                        <div key={question.id}>
-                            <p>{index + 1}. {question.questionText}</p>
-                            <TextField
-                                id="outlined-textarea"
-                                name={question.id.toString()}
-                                placeholder="Vastaus"
-                                multiline
-                                onChange={event => handleChange(event, question.id)}
-                            />
-                        </div>
-                    );
-                })
-                }
-                <Button onClick={saveAnswers}>Save</Button>
-            </Box>
-=======
 
                 <Paper sx={{
                     width: "30%",
@@ -97,13 +70,13 @@ function Pohja() {
                     <Typography sx={{ padding: '0 0 20px 0', fontSize: '19px' }}>{data.description}</Typography>
                     {questions.map((question, index) => {
                         return (
-                            <Box>
-                                <p key={question.id}>
+                            <Box key={question.id}>
+                                <p >
                                     {index + 1}. {question.questionText}<br />
                                 </p>
                                 <TextField
                                     id="outlined-textarea"
-                                    name="text"
+                                    name={question.id.toString()}
                                     placeholder="Vastaus"
                                     multiline
                                     fullWidth
@@ -117,7 +90,6 @@ function Pohja() {
                         sx={{ margin: "30px 0 0 0" }}>Save</Button>
                 </Paper>
             </Box >
->>>>>>> c14db0550f2c8570f67484f2b647a70998753caf
         );
     }
 }
