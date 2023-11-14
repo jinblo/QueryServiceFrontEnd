@@ -28,6 +28,8 @@ function Pohja() {
             .then(response => fetchData())
             .catch(error => console.error(error))
 
+        window.location.reload(false);
+
     };
 
     const fetchData = () => {
