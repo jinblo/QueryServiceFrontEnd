@@ -6,20 +6,23 @@ function Pohja() {
 
     const [data, setData] = useState({});
     const [questions, setQuestions] = useState([]);
-    const [answers, setAnswers] = useState([]);
+    const [answers, setAnswers] = useState();
 
-    const handleChange = (event, id) => {
-        setAnswers( [...answers, {questionId: id, text: event.target.value }])
+    const handleChange = (event) => {
+        setAnswers({...answers, [event.target.name]: event.target.value })
     }
 
     const saveAnswers = () => {
-        console.log(answers)
+        //console.log(answers)
+        const answerData = []
+        Object.entries(answers).map(entry => answerData.push({"questionId" : entry[0], "text": entry[1]}))
+
         const options = {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(answers)
+            body: JSON.stringify(answerData)
         }
         fetch('http://localhost:8080/queries/1/answers', options)
             .then(response => fetchData())
@@ -50,16 +53,14 @@ function Pohja() {
                 </AppBar>
                 <p>{data.title}</p>
                 <p>{data.description}</p>
-
+                
                 {questions.map((question, index) => {
                     return (
-                        <div>
-                            <p key={question.id}>
-                                {index + 1}. {question.questionText}<br />
-                            </p>
+                        <div key={question.id}>
+                            <p>{index + 1}. {question.questionText}</p>
                             <TextField
                                 id="outlined-textarea"
-                                name="text"
+                                name={question.id.toString()}
                                 placeholder="Vastaus"
                                 multiline
                                 onChange={event => handleChange(event, question.id)}
