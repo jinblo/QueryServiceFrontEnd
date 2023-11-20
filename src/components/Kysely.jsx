@@ -7,6 +7,7 @@ function Kysely() {
     const [data, setData] = useState({});
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState();
+    const [send, setSend] = useState(false);
 
     const handleChange = (event) => {
         setAnswers({ ...answers, [event.target.name]: event.target.value })
@@ -29,8 +30,7 @@ function Kysely() {
             .then(response => fetchData())
             .catch(error => console.error(error))
 
-        //window.location.reload(false);
-
+        setSend(true)
     };
 
     const fetchData = () => {
@@ -47,6 +47,15 @@ function Kysely() {
 
     if (!data) {
         return <div>Loading...</div>
+    } else if (send) {
+        return (
+            <Box sx={{
+                height: "100vh",
+                width: "100vw",
+            }}>
+                <Typography variant='h6' textAlign="center">Vastaukset lähetetty</Typography>
+            </Box>
+        )
     } else {
         return (
             <Box>
