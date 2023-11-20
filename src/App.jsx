@@ -1,12 +1,35 @@
-import { Box, Typography, AppBar, Toolbar } from '@mui/material';
-import Pohja from './components/Pohja';
-import './style.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Valilehdet from './components/Valilehdet';
+import Kysely from './components/Kysely';
+import Raportti from './components/Raportti';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const router = createBrowserRouter([
+  {
+    element: <Valilehdet />,
+    children: [
+      {
+        path: '/',
+        element: null
+      },
+      {
+        path: '/kysely',
+        element: <Kysely />
+      },
+      {
+        path: '/vastausraportti',
+        element: <Raportti />
+      },
+    ],
+  },
+]);
 
 function App() {
   return (
-    <Box sx={{height: "100vh"}}>
-      <Pohja />
-    </Box>
+    <div>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </div>
   );
 }
 

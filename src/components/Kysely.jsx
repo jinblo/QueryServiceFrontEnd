@@ -1,21 +1,22 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { AppBar, Box, Button, TextField, Typography, Paper } from '@mui/material';
+import { Box, Button, TextField, Typography, Paper } from '@mui/material';
 
-function Pohja() {
+function Kysely() {
 
     const [data, setData] = useState({});
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState();
 
     const handleChange = (event) => {
-        setAnswers({...answers, [event.target.name]: event.target.value })
+        setAnswers({ ...answers, [event.target.name]: event.target.value })
     }
 
     const saveAnswers = () => {
         //console.log(answers)
         const answerData = []
-        Object.entries(answers).map(entry => answerData.push({"questionId" : entry[0], "text": entry[1]}))
+        Object.entries(answers).map(entry => answerData.push({ "questionId": entry[0], "text": entry[1] }))
+        console.log(answerData)
 
         const options = {
             method: 'post',
@@ -28,7 +29,7 @@ function Pohja() {
             .then(response => fetchData())
             .catch(error => console.error(error))
 
-        window.location.reload(false);
+        //window.location.reload(false);
 
     };
 
@@ -48,28 +49,17 @@ function Pohja() {
         return <div>Loading...</div>
     } else {
         return (
-            <Box sx={{
-                height: "100vh",
-                width: "100vw",
-            }}>
-                <AppBar position='static' sx={{
-                    width: "100%",
-                    textAlign: "center",
-                    padding: "10px 0 10px 0"
-                }}>
-                    <Typography variant='h5'>{data.title}</Typography>
-                </AppBar>
-
+            <Box>
                 <Paper sx={{
                     width: "30%",
-                    padding: "30px",
-                    margin: "20px auto 0 auto",
+                    padding: "10px 30px",
+                    margin: "20px auto",
                     '& .MuiTypography-root': {
                         textAlign: 'center',
-                        color: 'rgb(100,100,100)',
                     },
                 }}>
-                    <Typography sx={{ padding: '0 0 20px 0', fontSize: '19px' }}>{data.description}</Typography>
+                    <Typography margin={1} color='primary' variant='h5'>{data.title}</Typography>
+                    <Typography marginBottom={4} sx={{ fontSize: '19px' }}>{data.description}</Typography>
                     {questions.map((question, index) => {
                         return (
                             <Box key={question.id}>
@@ -88,11 +78,11 @@ function Pohja() {
                         );
                     })
                     }
-                    <Button onClick={saveAnswers}
-                        sx={{ margin: "30px 0 0 0" }}>Save</Button>
+                    <Button variant='outlined' onClick={saveAnswers}
+                        sx={{ margin: "30px 0" }}>Save</Button>
                 </Paper>
             </Box >
         );
     }
 }
-export default Pohja;
+export default Kysely;
