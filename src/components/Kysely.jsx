@@ -60,7 +60,7 @@ function Kysely() {
         return (
             <Box>
                 <Paper sx={{
-                    width: "30%",
+                    width: "40%",
                     padding: "10px 30px",
                     margin: "20px auto",
                     '& .MuiTypography-root': {

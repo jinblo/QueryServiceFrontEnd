@@ -23,31 +23,34 @@ function Raportti() {
     useEffect(fetchData, []);
 
     return (
-        <Box
-            width='80vw'
-            marginX="auto"
-            sx={{
-                textAlign: 'left',
+        <Box>
+            <Paper sx={{
+                width: "40%",
+                padding: "10px 30px",
+                margin: "20px auto",
+                '& .MuiTypography-root': {
+                    textAlign: 'center',
+                },
             }}>
-            {console.log(questions)}
-            <Typography margin={1} color='primary' variant='h5'>{data.title}</Typography>
-            <Typography marginBottom={4} sx={{ fontSize: '19px' }}>{data.description}</Typography>
-            
-            {questions.map((question, questionIndex) => (
-                <Box key={question.id}>
-                    <p>
-                        {questionIndex + 1}. {question.questionText}<br />
-                    </p>
-                    {question.answers.map((answer, answerIndex) => (
-                        <ul key={answer.id}>
-                            <li>
-                                {answer.answerText}<br />
-                            </li>
-                        </ul>
-                    ))}
-                </Box>
-            ))}
+                {console.log(questions)}
+                <Typography margin={1} color='primary' variant='h5'>{data.title}</Typography>
+                <Typography marginBottom={4} sx={{ fontSize: '19px' }}>{data.description}</Typography>
 
+                {questions.map((question, questionIndex) => (
+                    <Box key={question.id}>
+                        <p>
+                            {questionIndex + 1}. {question.questionText}<br />
+                        </p>
+                        {question.answers.map((answer, answerIndex) => (
+                            <ul key={answer.id}>
+                                <li>
+                                    {answer.answerText}<br />
+                                </li>
+                            </ul>
+                        ))}
+                    </Box>
+                ))}
+            </Paper>
         </Box >
     );
 }
