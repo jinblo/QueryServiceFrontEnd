@@ -4,8 +4,7 @@ import { Box, Button, TextField, Typography, Paper } from '@mui/material';
 
 function Kysely() {
 
-    const [data, setData] = useState({});
-    const [questions, setQuestions] = useState([]);
+    const [data, setData] = useState();
     const [answers, setAnswers] = useState();
     const [send, setSend] = useState(false);
 
@@ -34,11 +33,11 @@ function Kysely() {
     };
 
     const fetchData = () => {
-        fetch('http://localhost:8080/queries/1')
-            .then(response => response.json())
-            .then(responseData => {
-                setData(responseData)
-                setQuestions(responseData.questions)
+         fetch('http://localhost:8080/queries/1')
+            .then(response => response.text())
+            .then(response => {
+                let data = JSON.parse(response)
+                setData(data)
             })
             .catch(err => console.error(err))
     }
@@ -69,7 +68,7 @@ function Kysely() {
                 }}>
                     <Typography margin={1} color='primary' variant='h5'>{data.title}</Typography>
                     <Typography marginBottom={4} sx={{ fontSize: '19px' }}>{data.description}</Typography>
-                    {questions.map((question, index) => {
+                    {data.questions.map((question, index) => {
                         return (
                             <Box key={question.id}>
                                 <p >
