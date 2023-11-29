@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Box, Button, TextField, Typography, Paper } from '@mui/material';
+import { Box, Button, TextField, Typography, Paper, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 
 function Kysely() {
 
@@ -13,10 +13,8 @@ function Kysely() {
     }
 
     const saveAnswers = () => {
-        //console.log(answers)
         const answerData = []
         Object.entries(answers).map(entry => answerData.push({ "questionId": entry[0], "text": entry[1] }))
-        console.log(answerData)
 
         const options = {
             method: 'post',
@@ -33,7 +31,7 @@ function Kysely() {
     };
 
     const fetchData = () => {
-         fetch('http://localhost:8080/queries/1')
+        fetch('http://localhost:8080/queries/1')
             .then(response => response.text())
             .then(response => {
                 let data = JSON.parse(response)
@@ -69,21 +67,25 @@ function Kysely() {
                     <Typography margin={1} color='primary' variant='h5'>{data.title}</Typography>
                     <Typography marginBottom={4} sx={{ fontSize: '19px' }}>{data.description}</Typography>
                     {data.questions.map((question, index) => {
-                        return (
-                            <Box key={question.id}>
-                                <p >
-                                    {index + 1}. {question.questionText}<br />
-                                </p>
+                        return <Box key={question.id}>
+                            <p>{index + 1}. {question.questionText}</p>
+                            {question.type == "TEXT" ?
                                 <TextField
                                     id="outlined-textarea"
                                     name={question.id.toString()}
                                     placeholder="Vastaus"
                                     multiline
                                     fullWidth
-                                    onChange={event => handleChange(event, question.id)}
-                                />
-                            </Box>
-                        );
+                                    onChange={event => handleChange(event, question.id)} />
+                                :
+                                <RadioGroup name={question.id.toString()} onChange={event => handleChange(event, question.id)}>
+                                    {question.answerOptions.map((option, index) => {
+                                        return <FormControlLabel key={option.id} value={option.answerOptionText} control={<Radio />} label={option.answerOptionText} />
+                                    })}
+                                </RadioGroup>}
+                        </Box>
+
+
                     })
                     }
                     <Button variant='outlined' onClick={saveAnswers}
