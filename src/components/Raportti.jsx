@@ -1,56 +1,74 @@
-import { Box, Typography, Paper, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { Box, Typography, Paper } from '@mui/material';
+import { BarChart } from '@mui/x-charts/BarChart';
+import { ResponsiveChartContainer } from '@mui/x-charts';
 
 function Raportti() {
 
     const [data, setData] = useState({});
     const [questions, setQuestions] = useState([]);
-    /*const [answers, setAnswers] = useState();*/
 
-    const fetchData = () => {
-
-        fetch('http://localhost:8080/queries/1')
-            .then(response => response.json())
-            .then(responseData => {
-                setData(responseData)
-                setQuestions(responseData.questions)
-                console.log(questions)
+    const fetchData = async () => {
+        await fetch('http://localhost:8080/queries/1')
+            .then(response => response.text())
+            .then(response => {
+                let data = JSON.parse(response)
+                setData(data)
             })
             .catch(err => console.error(err))
     }
 
-    useEffect(fetchData, []);
+    useEffect(() => { fetchData() }, []);
+
+    useEffect(() => {
+        setQuestions(data.questions)
+    }, [data])
 
     return (
         <Box>
             <Paper sx={{
-                width: "40%",
+                width: "60%",
                 padding: "10px 30px",
                 margin: "20px auto",
                 '& .MuiTypography-root': {
                     textAlign: 'center',
                 },
             }}>
-                {console.log(questions)}
                 <Typography margin={1} color='primary' variant='h5'>{data.title}</Typography>
                 <Typography marginBottom={4} sx={{ fontSize: '19px' }}>{data.description}</Typography>
 
-                {questions.map((question, questionIndex) => (
-                    <Box key={question.id}>
+                {questions?.map((question, questionIndex) => {
+                    let dataset = [];
+                    return <Box key={question.id}>
                         <p>
                             {questionIndex + 1}. {question.questionText}<br />
                         </p>
-                        {question.answers.map((answer, answerIndex) => (
-                            <ul key={answer.id}>
-                                <li>
-                                    {answer.answerText}<br />
-                                </li>
-                            </ul>
-                        ))}
+                        {question.type == "TEXT" ?
+                            <div><ul>{question.answers.map((answer) => {
+                                return <li key={answer.id}>{answer.answerText}</li>
+                            })}</ul></div>
+                            :
+                            <div><ul>{question.answerOptions.map((option) => {
+                                let selectedOptions = question.answers.filter((answer) => answer.answerText == option.answerOptionText)
+                                dataset.push({ option: option.answerOptionText, selected: selectedOptions.length })
+                                console.log(dataset)
+                                return <li key={option.id}>{option.answerOptionText} ({selectedOptions.length})</li>
+                            })}</ul>
+                                <BarChart
+                                    dataset={dataset}
+                                    yAxis={[{ scaleType: 'band', dataKey: 'option' }]}
+                                    xAxis={[{ tickMinStep: 1 }]}
+                                    series={[{ dataKey: 'selected', label: 'Vastaajia' }]}
+                                    slotProps={{ legend: { hidden: true } }}
+                                    margin={{ left: 150 }}
+                                    height={300}
+                                    layout="horizontal" />
+                            </div>
+                        }
                     </Box>
-                ))}
-            </Paper>
+                })}
+            </Paper >
         </Box >
     );
 }
