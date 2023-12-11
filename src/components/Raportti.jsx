@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Box, Typography, Paper } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
-import { ResponsiveChartContainer } from '@mui/x-charts';
 
 function Raportti() {
 
