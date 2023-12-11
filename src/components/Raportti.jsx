@@ -49,10 +49,10 @@ function Raportti() {
                                 return <li key={answer.id}>{answer.answerText}</li>
                             })}</ul></div>
                             :
-                            <div><ul>{question.answerOptions.map((option) => {
+                            <div>{question.answerOptions.map((option) => {
                                 let selectedOptions = question.answers.filter((answer) => answer.answerText == option.answerOptionText)
                                 dataset.push({ option: option.answerOptionText, selected: selectedOptions.length })
-                            })}</ul>
+                            })}
                                 <BarChart
                                     dataset={dataset}
                                     yAxis={[{ scaleType: 'band', dataKey: 'option' }]}
