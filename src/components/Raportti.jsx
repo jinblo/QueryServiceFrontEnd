@@ -52,13 +52,11 @@ function Raportti() {
                             <div><ul>{question.answerOptions.map((option) => {
                                 let selectedOptions = question.answers.filter((answer) => answer.answerText == option.answerOptionText)
                                 dataset.push({ option: option.answerOptionText, selected: selectedOptions.length })
-                                console.log(dataset)
-                                return <li key={option.id}>{option.answerOptionText} ({selectedOptions.length})</li>
                             })}</ul>
                                 <BarChart
                                     dataset={dataset}
                                     yAxis={[{ scaleType: 'band', dataKey: 'option' }]}
-                                    xAxis={[{ tickMinStep: 1 }]}
+                                    xAxis={[{ tickMinStep: 1, }]}
                                     series={[{ dataKey: 'selected', label: 'Vastaajia' }]}
                                     slotProps={{ legend: { hidden: true } }}
                                     margin={{ left: 150 }}

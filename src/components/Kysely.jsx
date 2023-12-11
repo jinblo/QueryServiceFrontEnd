@@ -47,10 +47,10 @@ function Kysely() {
     } else if (send) {
         return (
             <Box sx={{
-                height: "100vh",
                 width: "100vw",
+                marginTop: "20vh"
             }}>
-                <Typography variant='h6' textAlign="center">Vastaukset lähetetty</Typography>
+                <Typography variant='h6' textAlign="center">Kiitos!<br />Vastaukset lähetetty</Typography>
             </Box>
         )
     } else {
