@@ -9,7 +9,7 @@ function Raportti() {
     const [questions, setQuestions] = useState([]);
 
     const fetchData = async () => {
-        await fetch('http://localhost:8080/queries/1')
+        await fetch(`http://localhost:8080/queries/${id}`)
             .then(response => response.text())
             .then(response => {
                 let data = JSON.parse(response)

@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Valilehdet from './components/Valilehdet';
 import Kysely from './components/Kysely';
 import Raportti from './components/Raportti';
+import Valinta from './components/Valinta';
 import CssBaseline from '@mui/material/CssBaseline';
 
 const router = createBrowserRouter([
@@ -10,14 +11,14 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: null
+        element: <Valinta />
       },
       {
-        path: '/kysely',
+        path: '/kysely/:id',
         element: <Kysely />
       },
       {
-        path: '/vastausraportti',
+        path: '/vastausraportti/:id',
         element: <Raportti />
       },
     ],
@@ -33,4 +34,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

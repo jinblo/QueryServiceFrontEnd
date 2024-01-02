@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { Box, Button, TextField, Typography, Paper, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 function Kysely() {
-
+    let { id } = useParams();
     const [data, setData] = useState();
     const [answers, setAnswers] = useState();
     const [send, setSend] = useState(false);
@@ -23,7 +24,7 @@ function Kysely() {
             },
             body: JSON.stringify(answerData)
         }
-        fetch('http://localhost:8080/queries/1/answers', options)
+        fetch(`http://localhost:8080/queries/${id}/answers`, options)
             .then(response => fetchData())
             .catch(error => console.error(error))
 
@@ -31,7 +32,7 @@ function Kysely() {
     };
 
     const fetchData = () => {
-        fetch('http://localhost:8080/queries/1')
+        fetch(`http://localhost:8080/queries/${id}`)
             .then(response => response.text())
             .then(response => {
                 let data = JSON.parse(response)
