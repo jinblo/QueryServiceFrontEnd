@@ -1,3 +1,10 @@
+React frontend for QueryService project. 
+
+See https://github.com/jinblo/QueryServiceBackEnd for backend code.
+
+Answer queries and see answerdata with graphs.
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
